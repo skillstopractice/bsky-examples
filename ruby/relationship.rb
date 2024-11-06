@@ -1,4 +1,4 @@
-# Fetches the DID for two profiles 
+# Determines the relationship between two bsky accounts.
 # 
 # Example usage:
 #   
