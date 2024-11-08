@@ -12,8 +12,6 @@ require 'skyfall'
 require 'json'
 require 'open-uri'
 
-term = ARGV[0]
-
 sky = Skyfall::Stream.new('bsky.network', :subscribe_repos)
 
 dids = []
@@ -32,15 +30,6 @@ sky.on_message do |msg|
   end
 end
 
-
-# get_user_handle(op.repo) 
-
-#       puts
-#       handle[/bsky.social\z/] || puts("- - - #{handle} - - -")
-#     else
-#       print "."
-#     end
-
 def get_user_handle(did)
   url = "https://plc.directory/#{did}"
   json = JSON.parse(URI.open(url).read)
@@ -54,7 +43,7 @@ sky.on_reconnect { puts "Reconnecting..." }
 sky.on_error { |e| puts "ERROR: #{e}" }
 
 # close the connection cleanly on Ctrl+C
-trap("SIGINT") { sky.disconnect }
+trap("SIGINT") { sky.disconnect; exit }
 
 sky.connect
 
